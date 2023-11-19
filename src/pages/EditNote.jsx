@@ -34,7 +34,7 @@ const EditNote = () => {
   const fetchNote = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/notes/getnotesdetailsbyid/${id}`,
+        `https://sanjaikannang-notemakingapplication.onrender.com/notes/getnotesdetailsbyid/${id}`,
         {
           method: "GET",
           headers: {
@@ -60,14 +60,17 @@ const EditNote = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/notes/edit/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify(note),
-      });
+      const response = await fetch(
+        `https://sanjaikannang-notemakingapplication.onrender.com/notes/edit/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify(note),
+        }
+      );
 
       if (response.ok) {
         navigate("/notes");

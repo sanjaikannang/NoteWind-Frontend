@@ -24,7 +24,7 @@ const Archive = () => {
   const getArchivedNotes = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3000/notes/archivednotes",
+        "https://sanjaikannang-notemakingapplication.onrender.com/notes/archivednotes",
         {
           method: "GET",
           headers: {
@@ -51,7 +51,7 @@ const Archive = () => {
   const handleDelete = async (noteId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/notes/delete/${noteId}`,
+        `https://sanjaikannang-notemakingapplication.onrender.com/notes/delete/${noteId}`,
         {
           method: "DELETE",
           headers: {

@@ -23,7 +23,7 @@ const Label = () => {
   const getNotesWithLabels = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3000/notes/getnoteswithlabels",
+        "https://sanjaikannang-notemakingapplication.onrender.com/notes/getnoteswithlabels",
         {
           method: "GET",
           headers: {

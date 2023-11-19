@@ -26,13 +26,16 @@ const Signup = () => {
       password,
     };
     try {
-      const res = await fetch("http://localhost:3000/user/signup", {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        "https://sanjaikannang-notemakingapplication.onrender.com/user/signup",
+        {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await res.json();
 
       if (data.token) {

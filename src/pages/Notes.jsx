@@ -43,13 +43,16 @@ const Notes = () => {
 
   const getNotes = async () => {
     try {
-      const response = await fetch("http://localhost:3000/notes/get", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": localStorage.getItem("token"),
-        },
-      });
+      const response = await fetch(
+        "https://sanjaikannang-notemakingapplication.onrender.com/notes/get",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -69,14 +72,17 @@ const Notes = () => {
 
   const handleCreateNote = async () => {
     try {
-      await fetch("http://localhost:3000/notes/write", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify(newNote),
-      });
+      await fetch(
+        "https://sanjaikannang-notemakingapplication.onrender.com/notes/write",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify(newNote),
+        }
+      );
       getNotes();
       setIsDialogOpen(false);
       setNewNote({
@@ -112,7 +118,7 @@ const Notes = () => {
   const handleDelete = async (noteId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/notes/delete/${noteId}`,
+        `https://sanjaikannang-notemakingapplication.onrender.com/notes/delete/${noteId}`,
         {
           method: "DELETE",
           headers: {
@@ -142,13 +148,16 @@ const Notes = () => {
 
       setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
 
-      await fetch(`http://localhost:3000/notes/archivenotes/${noteId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": localStorage.getItem("token"),
-        },
-      });
+      await fetch(
+        `https://sanjaikannang-notemakingapplication.onrender.com/notes/archivenotes/${noteId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
 
       console.log("Note archived successfully");
 

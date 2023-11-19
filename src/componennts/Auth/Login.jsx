@@ -22,13 +22,16 @@ const Login = () => {
       email,
       password,
     };
-    const res = await fetch(`http://localhost:3000/user/login`, {
-      method: "POST",
-      body: JSON.stringify(payload),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `https://sanjaikannang-notemakingapplication.onrender.com/user/login`,
+      {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
 
     const data = await res.json();
     if (data.token) {
