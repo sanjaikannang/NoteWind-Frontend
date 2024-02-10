@@ -26,16 +26,13 @@ const Signup = () => {
       password,
     };
     try {
-      const res = await fetch(
-        "https://sanjaikannang-notemakingapplication.onrender.com/user/signup",
-        {
-          method: "POST",
-          body: JSON.stringify(payload),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await fetch("http://localhost:3000/user/signup", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await res.json();
 
       if (data.token) {
@@ -51,7 +48,7 @@ const Signup = () => {
         setErr(data.error || "Error during signup. Please try again.");
       }
     } catch (error) {
-      console.error("Error during signup:", error);
+      // console.error("Error during signup:", error);
       setErr("Error during signup. Please try again.");
     }
   };
