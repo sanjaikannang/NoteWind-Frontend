@@ -9,6 +9,7 @@ import {
   Box,
   Paper,
   Divider,
+  CircularProgress,
 } from "@mui/material";
 import Base from "../base/Base";
 
@@ -17,22 +18,28 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate();
 
   const handleSignup = async () => {
+    setLoading(true); // Set loading to true when signup process starts
+
     const payload = {
       name,
       email,
       password,
     };
     try {
-      const res = await fetch("http://localhost:3000/user/signup", {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        "https://sanjaikannang-notemakingapplication.onrender.com/user/signup",
+        {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await res.json();
 
       if (data.token) {
@@ -48,8 +55,9 @@ const Signup = () => {
         setErr(data.error || "Error during signup. Please try again.");
       }
     } catch (error) {
-      // console.error("Error during signup:", error);
       setErr("Error during signup. Please try again.");
+    } finally {
+      setLoading(false); // Set loading back to false when signup process completes
     }
   };
 
@@ -130,8 +138,13 @@ const Signup = () => {
                     fontSize: "14px",
                     borderRadius: "25px",
                   }}
+                  disabled={loading}
                 >
-                  Register
+                  {loading ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    "Register"
+                  )}
                 </Button>
                 {err && (
                   <Typography color="error" sx={{ mt: 2 }}>

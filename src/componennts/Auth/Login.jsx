@@ -8,6 +8,7 @@ import {
   Grid,
   Box,
   Paper,
+  CircularProgress,
 } from "@mui/material";
 import Base from "../base/Base";
 
@@ -15,36 +16,45 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    setLoading(true); // Set loading to true when login process starts
+
     const payload = {
       email,
       password,
     };
-    const res = await fetch(
-      `https://sanjaikannang-notemakingapplication.onrender.com/user/login`,
-      {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "content-type": "application/json",
-        },
-      }
-    );
+    try {
+      const res = await fetch(
+        `https://sanjaikannang-notemakingapplication.onrender.com/user/login`,
+        {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
 
-    const data = await res.json();
-    if (data.token) {
-      localStorage.setItem("token", data.token);
+      const data = await res.json();
+      if (data.token) {
+        localStorage.setItem("token", data.token);
 
-      if (data.result && data.result._id) {
-        localStorage.setItem("userId", data.result._id);
-        navigate("/notes");
+        if (data.result && data.result._id) {
+          localStorage.setItem("userId", data.result._id);
+          navigate("/notes");
+        } else {
+          setErr("User information is missing or invalid!");
+        }
       } else {
-        setErr("User information is missing or invalid!");
+        setErr("Invalid credentials. Please check your email and password!");
       }
-    } else {
-      setErr("Invalid credentials. Please check your email and password!");
+    } catch (error) {
+      setErr("An error occurred. Please try again.");
+    } finally {
+      setLoading(false); // Set loading back to false when login process completes
     }
   };
 
@@ -116,8 +126,13 @@ const Login = () => {
                     fontSize: "14px",
                     borderRadius: "25px",
                   }}
+                  disabled={loading}
                 >
-                  Login
+                  {loading ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    "Login"
+                  )}
                 </Button>
                 <br />
                 {err && (
